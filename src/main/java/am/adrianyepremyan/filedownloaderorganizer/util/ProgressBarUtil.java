@@ -1,4 +1,4 @@
-package am.adrianyepremyan.filedownloaderorganizer;
+package am.adrianyepremyan.filedownloaderorganizer.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

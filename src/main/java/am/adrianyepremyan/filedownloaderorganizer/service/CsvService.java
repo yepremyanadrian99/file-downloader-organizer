@@ -6,8 +6,8 @@ import static am.adrianyepremyan.filedownloaderorganizer.constant.Headers.URL;
 import static am.adrianyepremyan.filedownloaderorganizer.constant.Headers.USERNAME;
 
 import am.adrianyepremyan.filedownloaderorganizer.domain.ModerationRecord;
+import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public record CsvService(CSVParser csvParser) {
 
-    public Stream<ModerationRecord> getRecordStream(Predicate<CSVRecord> predicate) {
+    public List<ModerationRecord> getRecordStream(Predicate<CSVRecord> predicate) {
         return csvParser.stream()
             .filter(predicate)
             .map(csvRecord -> new ModerationRecord(
@@ -24,6 +24,7 @@ public record CsvService(CSVParser csvParser) {
                     csvRecord.get(ASSET_ID),
                     csvRecord.get(STATUS)
                 )
-            );
+            )
+            .toList();
     }
 }
