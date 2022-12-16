@@ -1,0 +1,5 @@
+csv:
+  file:
+    path: "/Users/adrianyepremyan/Documents/moderation.csv"
+
+rootPath: "moderation"
