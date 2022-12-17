@@ -16,9 +16,20 @@ public class CsvConfig {
     private String filePath;
 
     @Bean
-    public CSVFormat csvFormat() {
+    public CSVFormat moderationCsvFormat() {
         return CSVFormat.Builder.create(CSVFormat.DEFAULT)
             .setHeader("pkg", "username", "user id", "url", "asset id", "people on image", "status")
+            .setSkipHeaderRecord(true)
+            .setIgnoreHeaderCase(true)
+            .build();
+    }
+
+    @Bean
+    public CSVFormat moderationMarketplaceCsvFormat() {
+        return CSVFormat.Builder.create(CSVFormat.DEFAULT)
+            .setHeader("pkg", "username", "user id", "asset id / url", "people on image", "status",
+                "rejection reason 1", "rejection reason 2", "rejection reason 3", "moderation date", "moderator",
+                "\"moderator comment\"", "manager comment", "mp", "type", "upload date", "asset id", "url")
             .setSkipHeaderRecord(true)
             .setIgnoreHeaderCase(true)
             .build();
@@ -30,7 +41,14 @@ public class CsvConfig {
     }
 
     @Bean
-    public CSVParser csvParser(FileReader fileReader, CSVFormat csvFormat) throws IOException {
-        return CSVParser.parse(fileReader, csvFormat);
+    public CSVParser moderationCsvParser(FileReader fileReader,
+                                         CSVFormat moderationCsvFormat) throws IOException {
+        return CSVParser.parse(fileReader, moderationCsvFormat);
+    }
+
+    @Bean
+    public CSVParser moderationMarketplaceCsvParser(FileReader fileReader,
+                                                    CSVFormat moderationMarketplaceCsvFormat) throws IOException {
+        return CSVParser.parse(fileReader, moderationMarketplaceCsvFormat);
     }
 }

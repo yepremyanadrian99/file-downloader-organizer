@@ -42,7 +42,12 @@ public class FileService {
 
     @SneakyThrows
     public Stream<String> getFilesUnderDirStream(String dir, int maxDepth) {
-        return Files.walk(Path.of(dir), maxDepth)
+        final var dirPath = Path.of(dir);
+        if (!Files.exists(dirPath)) {
+            return Stream.empty();
+        }
+
+        return Files.walk(dirPath, maxDepth)
             .map(Path::toFile)
             .filter(File::isFile)
             .map(File::getName);
