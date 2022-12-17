@@ -12,7 +12,8 @@ public enum Status {
     ACCEPTED("accepted"),
     REJECTED("rejected"),
     MANAGER_REVIEW("manager review"),
-    TBD("tbd");
+    TBD("tbd"),
+    MARKETPLACE("marketplace");
 
     private static final Map<String, Status> cache = Arrays.stream(values())
         .collect(Collectors.toMap(status -> status.toString().toLowerCase(), identity()));

@@ -2,6 +2,9 @@ package am.adrianyepremyan.filedownloaderorganizer.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Stream;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -9,8 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class FileService {
 
-    @Value("${rootPath}")
-    private String rootPath;
+    private final String rootPath;
+
+    FileService(@Value("${rootPath}") String rootPath) {
+        this.rootPath = rootPath;
+    }
 
     public File createFolder(String dir) {
         final var folder = new File(rootPath + "/" + dir);
@@ -32,5 +38,18 @@ public class FileService {
         final var fos = new FileOutputStream(file);
         System.out.println("Writing bytes into the file...");
         fos.write(bytes);
+    }
+
+    @SneakyThrows
+    public Stream<String> getFilesUnderDirStream(String dir, int maxDepth) {
+        final var dirPath = Path.of(dir);
+        if (!Files.exists(dirPath)) {
+            return Stream.empty();
+        }
+
+        return Files.walk(dirPath, maxDepth)
+            .map(Path::toFile)
+            .filter(File::isFile)
+            .map(File::getName);
     }
 }

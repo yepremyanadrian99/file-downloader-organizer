@@ -1,10 +1,10 @@
-package am.adrianyepremyan.filedownloaderorganizer;
+package am.adrianyepremyan.filedownloaderorganizer.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ProgressBarUtil {
+public class ProgressBarUtils {
 
     public static void print(int total, int current) {
         double percent = ((double) current / total * 100);
