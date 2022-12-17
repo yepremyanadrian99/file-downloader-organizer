@@ -12,6 +12,7 @@ import am.adrianyepremyan.filedownloaderorganizer.service.CsvService;
 import am.adrianyepremyan.filedownloaderorganizer.service.FileService;
 import am.adrianyepremyan.filedownloaderorganizer.util.FileUtils;
 import am.adrianyepremyan.filedownloaderorganizer.util.ProgressBarUtils;
+import java.util.List;
 import java.util.function.Predicate;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -41,7 +42,13 @@ public class CsvJob implements CommandLineRunner {
                 && !cacheService.exists(record.get(ASSET_ID));
 
         final var records = csvService.getModerationRecordStream(predicate);
+        downloadAndOrganize(records);
 
+        System.out.println("Job has finished successfully!");
+        System.exit(0);
+    }
+
+    private void downloadAndOrganize(List<ModerationRecord> records) {
         ModerationRecord record;
         byte[] bytes;
         String ext;
@@ -58,7 +65,5 @@ public class CsvJob implements CommandLineRunner {
             cacheService.cache(record.assetId());
             ProgressBarUtils.print(records.size(), i + 1);
         }
-        System.out.println("Job has finished successfully!");
-        System.exit(0);
     }
 }
