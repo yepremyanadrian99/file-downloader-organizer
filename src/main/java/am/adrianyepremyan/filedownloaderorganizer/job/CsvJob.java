@@ -37,10 +37,10 @@ public class CsvJob implements CommandLineRunner {
             StringUtils.isNotBlank(record.get(USERNAME))
                 && StringUtils.isNotBlank(record.get(URL))
                 && StringUtils.isNotBlank(record.get(STATUS))
-                && Status.from(record.get(STATUS)) == Status.MARKETPLACE
+                && Status.from(record.get(STATUS)) == Status.ACCEPTED
                 && !cacheService.exists(record.get(ASSET_ID));
 
-        final var records = csvService.getModerationMarketplaceRecordStream(predicate);
+        final var records = csvService.getModerationRecordStream(predicate);
 
         ModerationRecord record;
         byte[] bytes;
@@ -52,7 +52,7 @@ public class CsvJob implements CommandLineRunner {
             System.out.println("Downloading " + record.url() + " of user " + record.username());
             bytes = restTemplate.getForObject(record.url(), byte[].class);
             ext = record.url().substring(record.url().lastIndexOf("."));
-            dir = FileUtils.moderationMarketplaceDir(record);
+            dir = FileUtils.moderationDir(record);
             filename = FileUtils.moderationFilename(record);
             fileService.writeIntoFile(dir, filename, ext, bytes);
             cacheService.cache(record.assetId());

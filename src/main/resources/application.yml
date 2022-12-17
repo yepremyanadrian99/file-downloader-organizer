@@ -1,5 +1,5 @@
 csv:
   file:
-    path: "/Users/adrianyepremyan/Documents/moderation_marketplace.csv"
+    path: "/Users/adrianyepremyan/Documents/moderation.csv"
 
-rootPath: "moderation_marketplace"
+rootPath: "moderation"
