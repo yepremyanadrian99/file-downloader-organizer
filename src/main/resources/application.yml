@@ -3,7 +3,3 @@ csv:
     path: "/Users/adrianyepremyan/Documents/moderation.csv"
 
 rootPath: "moderation"
-
-cache:
-  file:
-    path: "cache"

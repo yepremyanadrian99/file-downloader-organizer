@@ -53,6 +53,7 @@ public class CsvJob implements CommandLineRunner {
             cacheService.cache(record.assetId());
             ProgressBarUtil.print(records.size(), i + 1);
         }
-        System.out.println("Job has successfully finished!");
+        System.out.println("Job has finished successfully!");
+        System.exit(0);
     }
 }
